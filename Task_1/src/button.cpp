@@ -45,13 +45,13 @@ void loop()
   // If the button is pushed down, it publishes message “ButtonPushed”
   if (button.pushed()) {
     float value = 111;
-    char buf [2];
+    char buf [10];
     String(value).toCharArray(buf,2);
     iot.log("ButtonPushed");
     iot.publishMsg(MODULE_TOPIC, buf);
   }else{
     float value = 000;
-    char buf [2];
+    char buf [10];
     String(value).toCharArray(buf,2);
     iot.publishMsg(MODULE_TOPIC, buf);
   }
