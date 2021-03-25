@@ -41,23 +41,24 @@ void loop()
   // Askes in which state the button is, pressed, long pressed, double click, or released.
   button.poll();
 
+  //the following was changed and code added to send messages to led 
 
-  // If the button is pushed down, it publishes message “ButtonPushed”
-  float value;
-    char buf[10];
-    // If the button is pushed down, it publishes message “ButtonPushed”
-    if (button.pushed()) {
-      value = 255;
-      String(value).toCharArray(buf,10);
-      iot.log("ButtonPushed");
-      iot.publishMsg(MODULE_TOPIC, buf);
-      Serial.println(buf);
-      Serial.println("click");
+  float value; //value to store for color
+  char buf[10]; //buffer to hold data for messages
+  // If the button is pushed down, it publishes message to the led to emite light
+  if (button.pushed()) {
+    iot.log("ButtonPushed"); //log that the button was pressed
+    value = 255; //color value
+    String(value).toCharArray(buf,10); //change float to string for message
+    iot.publishMsg(MODULE_TOPIC, buf); //send data in buf to topic space
+    Serial.println(buf); //serial check for buf data
+    Serial.println("click"); //serial check that button was pressed
 
-    }else if (button.released()){
-      value = 000;
-      String(value).toCharArray(buf,10);
-      iot.log("ButtonReleased");
-      iot.publishMsg(MODULE_TOPIC, buf);
-    }
+  // If the button is released, it publishes message to turn the led off
+  }else if (button.released()){
+    iot.log("ButtonReleased"); //log to show button was released
+    value = 000; //value to turn led off
+    String(value).toCharArray(buf,10); //change float to string for message
+    iot.publishMsg(MODULE_TOPIC, buf); //send data in buf to topic space
+  }
 }
