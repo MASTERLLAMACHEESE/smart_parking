@@ -2,9 +2,9 @@
 #include <ittiot.h>
 #include <Switch.h>
 
-#define MODULE_TOPIC "ESP30/rgb"
-#define WIFI_NAME "name"
-#define WIFI_PASSWORD "password"
+#define MODULE_TOPIC "rgb"
+#define WIFI_NAME "Kohalik-WIFI"
+#define WIFI_PASSWORD "PlayStation4"
 
 const byte buttonPin = D3; // TO which pin the button has been assigned
 int i;
@@ -25,8 +25,8 @@ void setup()
 
   pinMode(buttonPin, INPUT);
 
-  //iot.setConfig("wname", WIFI_NAME);
-  //iot.setConfig("wpass", WIFI_PASSWORD);
+  iot.setConfig("wname", WIFI_NAME);
+  iot.setConfig("wpass", WIFI_PASSWORD);
   // Print json config to serial
   iot.printConfig();
   // Initialize IoT library
@@ -43,16 +43,21 @@ void loop()
 
 
   // If the button is pushed down, it publishes message “ButtonPushed”
-  if (button.pushed()) {
-    float value = 111;
-    char buf [10];
-    String(value).toCharArray(buf,2);
-    iot.log("ButtonPushed");
-    iot.publishMsg(MODULE_TOPIC, buf);
-  }else{
-    float value = 000;
-    char buf [10];
-    String(value).toCharArray(buf,2);
-    iot.publishMsg(MODULE_TOPIC, buf);
-  }
+  float value;
+    char buf[10];
+    // If the button is pushed down, it publishes message “ButtonPushed”
+    if (button.pushed()) {
+      value = 255;
+      String(value).toCharArray(buf,10);
+      iot.log("ButtonPushed");
+      iot.publishMsg(MODULE_TOPIC, buf);
+      Serial.println(buf);
+      Serial.println("click");
+
+    }else if (button.released()){
+      value = 000;
+      String(value).toCharArray(buf,10);
+      iot.log("ButtonReleased");
+      iot.publishMsg(MODULE_TOPIC, buf);
+    }
 }
