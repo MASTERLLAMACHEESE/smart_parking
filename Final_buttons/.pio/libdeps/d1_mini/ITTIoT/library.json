@@ -1,0 +1,43 @@
+{
+  "name": "ITTIoT",
+  "authors": [
+    {
+      "name": "Tarmo Kople",
+      "maintainer": false,
+      "email": "tarmo@ekiri.ee"
+    },
+    {
+      "name": "Mallor Kingsepp",
+      "maintainer": false
+    },
+    {
+      "url": "http://roboticlab.eu/",
+      "name": "Tomy kalm",
+      "maintainer": true,
+      "email": "tomy@robolabor.ee"
+    }
+  ],
+  "export": {},
+  "frameworks": [
+    "arduino"
+  ],
+  "description": "ITTIoT framework for ESP8266 devices",
+  "version": "1.0.7+b",
+  "keywords": [
+    "iot",
+    "esp8266",
+    "framework"
+  ],
+  "dependencies": [
+    {
+      "name": "ArduinoJson",
+      "version": "5.13.4"
+    },
+    {
+      "name": "PubSubClient"
+    }
+  ],
+  "platforms": [
+    "espressif8266"
+  ]
+}
