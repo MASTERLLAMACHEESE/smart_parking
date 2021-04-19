@@ -1,16 +1,22 @@
+//https://learn.adafruit.com/adafruit-gfx-graphics-library/graphics-primitives
+
 #include <Arduino.h>
 #include <ittiot.h>
 #include <Switch.h>
+#include <Adafruit_GFX.h>
+#include <WEMOS_Matrix_GFX.h>
+#include <SPI.h>
 
 #define MODULE_TOPIC_IN "ESP30/btn_in"
-#define MODULE_TOPIC_OUT "ESP30/btn_out"
 #define WIFI_NAME "name"
 #define WIFI_PASSWORD "password"
 
-const byte buttonPin = D3; // TO which pin the button has been assigned
-int i;
+MLED matrix(7); //set intensity=7 (maximum)
 
-Switch button = Switch(buttonPin);
+void setup() {
+  Serial.begin(9600);
+  Serial.println("8x8 LED Matrix Test");
+}
 
 // Function started after the connection to the server is established.
 void iot_connected()
@@ -23,8 +29,6 @@ void setup()
 {
   Serial.begin(115200); // setting up serial connection parameter
   Serial.println("Booting");
-
-  pinMode(buttonPin, INPUT);
 
   //iot.setConfig("wname", WIFI_NAME);
   //iot.setConfig("wpass", WIFI_PASSWORD);
@@ -59,37 +63,27 @@ void iot_received(String topic, String msg)
   Serial.print(" payload: ");
   Serial.println(msg);
 
-  if(topic == MODULE_TOPIC_OUT)
+  if(topic == MODULE_TOPIC_IN)//ehk parklas on üks auto
   {
-    // getting the value of out from topic
-    value_out = 1;
-
+    //value_out = 1;//ehk parklas on üks auto
+    matrix.clear(); // Clear the matrix field
+    matrix.drawLine(3, 4, 6, 1, LED_ON); // arv 1
+    matrix.drawLine(6, 1, 6, 8, LED_ON); //arv 1
+    matrix.writeDisplay();  // Write the changes we just made to the display
   }
-}
-
-void loop()
-{
-  // IoT behind the plan work, it should be periodically called
-  iot.handle();
-
-  // Askes in which state the button is, pressed, long pressed, double click, or released.
-  button.poll();
-
-  float value_in;
-  float value_out;
-  char buf[10];
-  // If the button is pushed down, it publishes message “ButtonPushed”
-  if (value_out <= 1){
-    value_in = value_in - 1
-    value_out = 0
+  else if (MODULE_TOPIC_IN>=2) //ehk parklas on kaks autot
+  {
+    matrix.clear(); // Clear the matrix field
+    matrix.drawRect(3, 1, 4, 8, LED_ON); // arv 0
+    matrix.writeDisplay();  // Write the changes we just made to the display
   }
-  if (button.pushed()) {
-    value_in = value_in + 1;
-    String(value_in).toCharArray(buf,10);
-    iot.log("ButtonPushed");
-    iot.publishMsg(MODULE_TOPIC, buf);
-
-  }else if (button.released()){
-    iot.log("ButtonReleased");
+  else if (MODULE_TOPIC_IN<=0) {
+    matrix.clear(); // Clear the matrix field
+    matrix.drawLine(2, 3, 4, 1, LED_ON); //arv 2
+    matrix.drawLine(4, 1, 5, 1, LED_ON); //arv 2
+    matrix.drawLine(5, 1, 7, 3, LED_ON); //arv 2
+    matrix.drawLine(7, 3, 2, 8, LED_ON); //arv 2
+    matrix.drawLine(2, 8, 7, 8, LED_ON); //arv 2
+    matrix.writeDisplay();  // Write the changes we just made to the display
   }
 }
