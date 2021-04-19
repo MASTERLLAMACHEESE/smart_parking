@@ -52,5 +52,8 @@ void loop()
 
   }else if (button.released()){
     iot.log("ButtonReleased");
+    value = 0;
+    String(value).toCharArray(buf,10);
+    iot.publishMsg(MODULE_TOPIC_OUT, buf);
   }
 }
