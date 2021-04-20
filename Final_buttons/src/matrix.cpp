@@ -89,3 +89,7 @@ void iot_received(String topic, String msg)
     matrix.writeDisplay();  // Write the changes we just made to the display
   }
 }
+
+void loop(){
+  iot.handle()
+}
