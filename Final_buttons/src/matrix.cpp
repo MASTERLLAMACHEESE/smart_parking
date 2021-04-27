@@ -22,7 +22,8 @@ void setup() {
 void iot_connected()
 {
   Serial.println("MQTT connected callback");
-  iot.log("IoT Button example!");
+  iot.subscribe(MODULE_TOPIC_IN);
+  iot.log("IoT MATRIX!");
 }
 
 void setup()
@@ -92,10 +93,9 @@ void iot_received(String topic, String msg)
       matrix.writeDisplay();  // Write the changes we just made to the display
     }
   }
-
-
 }
 
 void loop(){
-  iot.handle()
+  iot.handle();
+  delay(200);
 }
