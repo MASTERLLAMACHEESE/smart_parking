@@ -63,7 +63,7 @@ void iot_received(String topic, String msg)
   Serial.print(" payload: ");
   Serial.println(msg);
 
-  int i = std::stoi(MODULE_TOPIC_IN);
+  int i = getValue(MODULE_TOPIC_IN);
 
   if(topic == i)//ehk parklas on üks auto
   {
