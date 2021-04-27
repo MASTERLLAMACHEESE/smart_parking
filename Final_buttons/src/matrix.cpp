@@ -68,7 +68,7 @@ void iot_received(String topic, String msg)
   {
     String in = getValue(msg,';',0);
     i = in.toInt()
-    if(topic == i)//ehk parklas on üks auto
+    if(i == 1)//ehk parklas on üks auto
     {
       //value_out = 1;//ehk parklas on üks auto
       matrix.clear(); // Clear the matrix field
