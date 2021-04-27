@@ -11,6 +11,7 @@ const byte buttonPin = D3; // TO which pin the button has been assigned
 int i;
 
 Switch button = Switch(buttonPin);
+float value_out;
 
 // Function started after the connection to the server is established.
 void iot_connected()
@@ -76,10 +77,9 @@ void loop()
   button.poll();
 
   float value_in;
-  float value_out;
   char buf[10];
   // If the button is pushed down, it publishes message “ButtonPushed”
-  if (value_out <= 1){
+  if (value_out >= 1){
     value_in = value_in - 1
     value_out = 0
   }
@@ -87,7 +87,7 @@ void loop()
     value_in = value_in + 1;
     String(value_in).toCharArray(buf,10);
     iot.log("ButtonPushed");
-    iot.publishMsg(MODULE_TOPIC, buf);
+    iot.publishMsg(MODULE_TOPIC_IN, buf);
 
   }else if (button.released()){
     iot.log("ButtonReleased");
