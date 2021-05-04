@@ -41,7 +41,7 @@ void iot_received(String topic, String msg)
   int i;
   if (topic == MODULE_TOPIC_IN)
   {
-    String in = getValue(msg,';',0);
+    String in = getValue(msg,';',1);
     i = in.toInt()
     if(i == 1)//ehk parklas on üks auto
     {
