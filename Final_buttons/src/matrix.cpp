@@ -7,15 +7,24 @@
 #include <WEMOS_Matrix_GFX.h>
 #include <SPI.h>
 
-#define MODULE_TOPIC_IN "ESP30/btn_in"
-#define WIFI_NAME "name"
-#define WIFI_PASSWORD "password"
+#define MODULE_TOPIC_IN "ESP60/btn_in"
+#define WIFI_NAME "Kohalik-WIFI"
+#define WIFI_PASSWORD "PlayStation4"
 
 MLED matrix(7); //set intensity=7 (maximum)
-
-void setup() {
+void setup()
+{
   Serial.begin(9600);
   Serial.println("8x8 LED Matrix Test");
+//  Serial.begin(115200); // setting up serial connection parameter
+  Serial.println("Booting");
+
+  iot.setConfig("wname", WIFI_NAME);
+  iot.setConfig("wpass", WIFI_PASSWORD);
+  // Print json config to serial
+  iot.printConfig();
+  // Initialize IoT library
+  iot.setup();
 }
 
 // Function started after the connection to the server is established.
@@ -24,19 +33,6 @@ void iot_connected()
   Serial.println("MQTT connected callback");
   iot.subscribe(MODULE_TOPIC_IN);
   iot.log("IoT MATRIX!");
-}
-
-void setup()
-{
-  Serial.begin(115200); // setting up serial connection parameter
-  Serial.println("Booting");
-
-  //iot.setConfig("wname", WIFI_NAME);
-  //iot.setConfig("wpass", WIFI_PASSWORD);
-  // Print json config to serial
-  iot.printConfig();
-  // Initialize IoT library
-  iot.setup();
 }
 
 String getValue(String data, char separator, int index)
@@ -68,7 +64,7 @@ void iot_received(String topic, String msg)
   if (topic == MODULE_TOPIC_IN)
   {
     String in = getValue(msg,';',0);
-    i = in.toInt()
+    i = in.toInt();
     if(i == 1)//ehk parklas on üks auto
     {
       //value_out = 1;//ehk parklas on üks auto
@@ -93,6 +89,8 @@ void iot_received(String topic, String msg)
       matrix.writeDisplay();  // Write the changes we just made to the display
     }
   }
+
+
 }
 
 void loop(){
