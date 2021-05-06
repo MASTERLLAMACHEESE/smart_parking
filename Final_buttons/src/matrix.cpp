@@ -13,6 +13,8 @@
 
 MLED matrix(7); //set intensity=7 (maximum)
 
+String in_data;
+
 String getValue(String data, char separator, int index)
 {
   int found = 0;
@@ -38,34 +40,10 @@ void iot_received(String topic, String msg)
   Serial.print(" payload: ");
   Serial.println(msg);
 
-  int i;
+
   if (topic == MODULE_TOPIC_IN)
   {
-    String in = getValue(msg,';',0);
-    i = in.toInt();
-    if(i == 1)//ehk parklas on üks auto
-    {
-      //value_out = 1;//ehk parklas on üks auto
-      matrix.clear(); // Clear the matrix field
-      matrix.drawLine(3, 4, 6, 1, LED_ON); // arv 1
-      matrix.drawLine(6, 1, 6, 8, LED_ON); //arv 1
-      matrix.writeDisplay();  // Write the changes we just made to the display
-    }
-    else if (i>=2) //ehk parklas on kaks autot
-    {
-      matrix.clear(); // Clear the matrix field
-      matrix.drawRect(3, 1, 4, 8, LED_ON); // arv 0
-      matrix.writeDisplay();  // Write the changes we just made to the display
-    }
-    else if (i<=0) {
-      matrix.clear(); // Clear the matrix field
-      matrix.drawLine(2, 3, 4, 1, LED_ON); //arv 2
-      matrix.drawLine(4, 1, 5, 1, LED_ON); //arv 2
-      matrix.drawLine(5, 1, 7, 3, LED_ON); //arv 2
-      matrix.drawLine(7, 3, 2, 8, LED_ON); //arv 2
-      matrix.drawLine(2, 8, 7, 8, LED_ON); //arv 2
-      matrix.writeDisplay();  // Write the changes we just made to the display
-    }
+    in_data = getValue(msg,';',0);
   }
 }
 
@@ -93,12 +71,32 @@ void setup()
 
 void loop(){
   iot.handle();
-  matrix.clear(); // Clear the matrix field
-  matrix.drawLine(2, 3, 4, 1, LED_ON); //arv 2
-  matrix.drawLine(4, 1, 5, 1, LED_ON); //arv 2
-  matrix.drawLine(5, 1, 7, 3, LED_ON); //arv 2
-  matrix.drawLine(7, 3, 2, 8, LED_ON); //arv 2
-  matrix.drawLine(2, 8, 7, 8, LED_ON); //arv 2
-  matrix.writeDisplay();
+  int i;
+  if (in_data != ""){
+    i = in_data.toInt();
+    if(i == 1)//ehk parklas on üks auto
+    {
+      //value_out = 1;//ehk parklas on üks auto
+      matrix.clear(); // Clear the matrix field
+      matrix.drawLine(3, 4, 6, 1, LED_ON); // arv 1
+      matrix.drawLine(6, 1, 6, 8, LED_ON); //arv 1
+      matrix.writeDisplay();  // Write the changes we just made to the display
+    }
+    else if (i>=2) //ehk parklas on kaks autot
+    {
+      matrix.clear(); // Clear the matrix field
+      matrix.drawRect(3, 1, 4, 8, LED_ON); // arv 0
+      matrix.writeDisplay();  // Write the changes we just made to the display
+    }
+    else if (i<=0) {
+      matrix.clear(); // Clear the matrix field
+      matrix.drawLine(2, 3, 4, 1, LED_ON); //arv 2
+      matrix.drawLine(4, 1, 5, 1, LED_ON); //arv 2
+      matrix.drawLine(5, 1, 7, 3, LED_ON); //arv 2
+      matrix.drawLine(7, 3, 2, 8, LED_ON); //arv 2
+      matrix.drawLine(2, 8, 7, 8, LED_ON); //arv 2
+      matrix.writeDisplay();  // Write the changes we just made to the display
+    }
+  }
   delay(200);
 }
