@@ -7,6 +7,7 @@
 #define WIFI_PASSWORD "password"
 
 const byte buttonPin = D3; // TO which pin the button has been assigned
+int i;
 float value = 0;
 Switch button = Switch(buttonPin);
 
@@ -39,7 +40,6 @@ void loop()
 
   // Askes in which state the button is, pressed, long pressed, double click, or released.
   button.poll();
-
 
   char buf[10];
   // If the button is pushed down, it publishes message “ButtonPushed”
