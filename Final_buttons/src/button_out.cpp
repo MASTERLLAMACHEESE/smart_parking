@@ -2,7 +2,7 @@
 #include <ittiot.h>
 #include <Switch.h>
 
-#define MODULE_TOPIC_OUT "ESP30/btn_out"
+#define MODULE_TOPIC_OUT "ESP07/btn_out"
 #define WIFI_NAME "name"
 #define WIFI_PASSWORD "password"
 
@@ -55,4 +55,5 @@ void loop()
     String(value).toCharArray(buf,10);
     iot.publishMsg(MODULE_TOPIC_OUT, buf);
   }
+  delay (500);
 }

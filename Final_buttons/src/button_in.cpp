@@ -3,7 +3,7 @@
 #include <Switch.h>
 
 #define MODULE_TOPIC_IN "ESP60/btn_in"
-#define MODULE_TOPIC_OUT "ESP60/btn_out"
+#define MODULE_TOPIC_OUT "ESP07/btn_out"
 #define WIFI_NAME "Siidisaba7"
 #define WIFI_PASSWORD "Varst1onsuv1"
 
@@ -78,9 +78,11 @@ void loop()
 
   char buf[10];
   // If the button is pushed down, it publishes message “ButtonPushed”
-  if (value_out >= 1){
-    value_in = value_in - 1;
-    value_out = 0;
+  if (value_in != 0){
+    if (value_out >= 1){
+      value_in = value_in - 1;
+      value_out = 0;
+    }
   }
   if (button.pushed()) {
     value_in = value_in + 1;
@@ -91,4 +93,5 @@ void loop()
   }else if (button.released()){
     iot.log("ButtonReleased");
   }
+  delay (100);
 }
