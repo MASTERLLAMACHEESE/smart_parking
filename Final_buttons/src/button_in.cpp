@@ -12,7 +12,7 @@ int i;
 
 Switch button = Switch(buttonPin);
 float value_out;
-
+float value_in = 0;
 // Function started after the connection to the server is established.
 void iot_connected()
 {
@@ -76,7 +76,6 @@ void loop()
   // Askes in which state the button is, pressed, long pressed, double click, or released.
   button.poll();
 
-  float value_in;
   char buf[10];
   // If the button is pushed down, it publishes message “ButtonPushed”
   if (value_out >= 1){
