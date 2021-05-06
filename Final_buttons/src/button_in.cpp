@@ -64,7 +64,6 @@ void iot_received(String topic, String msg)
   {
     // getting the value of out from topic
     value_out = 1;
-
   }
 }
 
@@ -86,12 +85,11 @@ void loop()
   }
   if (button.pushed()) {
     value_in = value_in + 1;
-    String(value_in).toCharArray(buf,10);
     iot.log("ButtonPushed");
-    iot.publishMsg(MODULE_TOPIC_IN, buf);
-
   }else if (button.released()){
     iot.log("ButtonReleased");
   }
-  delay (100);
+  String(value_in).toCharArray(buf,10);
+  iot.publishMsg(MODULE_TOPIC_IN, buf);
+  delay (500);
 }

@@ -55,5 +55,5 @@ void loop()
     String(value).toCharArray(buf,10);
     iot.publishMsg(MODULE_TOPIC_OUT, buf);
   }
-  delay (500);
+  delay (1000);
 }
