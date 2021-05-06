@@ -93,5 +93,12 @@ void setup()
 
 void loop(){
   iot.handle();
+  matrix.clear(); // Clear the matrix field
+  matrix.drawLine(2, 3, 4, 1, LED_ON); //arv 2
+  matrix.drawLine(4, 1, 5, 1, LED_ON); //arv 2
+  matrix.drawLine(5, 1, 7, 3, LED_ON); //arv 2
+  matrix.drawLine(7, 3, 2, 8, LED_ON); //arv 2
+  matrix.drawLine(2, 8, 7, 8, LED_ON); //arv 2
+  matrix.writeDisplay();
   delay(200);
 }
