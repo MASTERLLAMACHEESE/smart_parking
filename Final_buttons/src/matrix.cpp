@@ -67,8 +67,6 @@ void iot_received(String topic, String msg)
       matrix.writeDisplay();  // Write the changes we just made to the display
     }
   }
-
-
 }
 
 // Function started after the connection to the server is established.
