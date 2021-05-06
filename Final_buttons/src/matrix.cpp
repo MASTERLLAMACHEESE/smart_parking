@@ -12,8 +12,9 @@
 #define WIFI_PASSWORD "PlayStation4"
 
 MLED matrix(7); //set intensity=7 (maximum)
-
+int i;
 String in_data;
+int x;
 
 String getValue(String data, char separator, int index)
 {
@@ -71,10 +72,10 @@ void setup()
 
 void loop(){
   iot.handle();
-  int i;
+
   if (in_data != ""){
-    i = in_data.toInt();
-    if(i == 1)//ehk parklas on üks auto
+    x = in_data.toInt();
+    if(x == 1)//ehk parklas on üks auto
     {
       //value_out = 1;//ehk parklas on üks auto
       matrix.clear(); // Clear the matrix field
@@ -82,13 +83,13 @@ void loop(){
       matrix.drawLine(6, 1, 6, 8, LED_ON); //arv 1
       matrix.writeDisplay();  // Write the changes we just made to the display
     }
-    else if (i>=2) //ehk parklas on kaks autot
+    else if (x>=2) //ehk parklas on kaks autot
     {
       matrix.clear(); // Clear the matrix field
       matrix.drawRect(3, 1, 4, 8, LED_ON); // arv 0
       matrix.writeDisplay();  // Write the changes we just made to the display
     }
-    else if (i<=0) {
+    else if (x<=0) {
       matrix.clear(); // Clear the matrix field
       matrix.drawLine(2, 3, 4, 1, LED_ON); //arv 2
       matrix.drawLine(4, 1, 5, 1, LED_ON); //arv 2
