@@ -7,14 +7,15 @@
 #include <WEMOS_Matrix_GFX.h>
 #include <SPI.h>
 
-#define MODULE_TOPIC_IN "ESP60/btn_in"
-#define WIFI_NAME "Kohalik-WIFI"
-#define WIFI_PASSWORD "PlayStation4"
+#define MODULE_TOPIC_IN "ESP35/btn_in"
+#define MODULE_TOPIC_PIR1 "ESP31/pir"
+#define MODULE_TOPIC_PIR2 "ESP08/pir"
+#define WIFI_NAME "Siidisaba7"
+#define WIFI_PASSWORD "Varst1onsuv1!"
 
 MLED matrix(7); //set intensity=7 (maximum)
-int i;
+
 String in_data;
-int x;
 
 String getValue(String data, char separator, int index)
 {
@@ -61,8 +62,8 @@ void setup()
   Serial.begin(115200); // setting up serial connection parameter
   Serial.println("Booting");
 
-  //iot.setConfig("wname", WIFI_NAME);
-  //iot.setConfig("wpass", WIFI_PASSWORD);
+  iot.setConfig("wname", WIFI_NAME);
+  iot.setConfig("wpass", WIFI_PASSWORD);
   // Print json config to serial
   iot.printConfig();
   // Initialize IoT library
@@ -72,10 +73,10 @@ void setup()
 
 void loop(){
   iot.handle();
-
+  int i;
   if (in_data != ""){
-    x = in_data.toInt();
-    if(x == 1)//ehk parklas on üks auto
+    i = in_data.toInt();
+    if(i == 1)//ehk parklas on üks auto
     {
       //value_out = 1;//ehk parklas on üks auto
       matrix.clear(); // Clear the matrix field
@@ -83,13 +84,13 @@ void loop(){
       matrix.drawLine(6, 1, 6, 8, LED_ON); //arv 1
       matrix.writeDisplay();  // Write the changes we just made to the display
     }
-    else if (x>=2) //ehk parklas on kaks autot
+    else if (i>=2) //ehk parklas on kaks autot
     {
       matrix.clear(); // Clear the matrix field
       matrix.drawRect(3, 1, 4, 8, LED_ON); // arv 0
       matrix.writeDisplay();  // Write the changes we just made to the display
     }
-    else if (x<=0) {
+    else if (i<=0) {
       matrix.clear(); // Clear the matrix field
       matrix.drawLine(2, 3, 4, 1, LED_ON); //arv 2
       matrix.drawLine(4, 1, 5, 1, LED_ON); //arv 2
