@@ -8,8 +8,8 @@
 #include <SPI.h>
 
 #define MODULE_TOPIC_IN "ESP35/btn_in"
-#define MODULE_TOPIC_PIR1 "ESP31/pir"
-#define MODULE_TOPIC_PIR2 "ESP08/pir"
+#define MODULE_TOPIC_PIR1 "ESP31/pir" //pir1 
+#define MODULE_TOPIC_PIR2 "ESP08/pir" //pir2
 #define WIFI_NAME "Siidisaba7"
 #define WIFI_PASSWORD "Varst1onsuv1!"
 
