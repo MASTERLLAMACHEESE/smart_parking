@@ -16,7 +16,10 @@
 MLED matrix(7); //set intensity=7 (maximum)
 
 String in_data;
-
+String str_pir1;
+String str_pir2;
+int pir1 = 2;
+int pir2 = 2;
 String getValue(String data, char separator, int index)
 {
   int found = 0;
@@ -42,10 +45,30 @@ void iot_received(String topic, String msg)
   Serial.print(" payload: ");
   Serial.println(msg);
 
-
+  //get vehicle in out status
   if (topic == MODULE_TOPIC_IN)
   {
     in_data = getValue(msg,';',0);
+  }
+  //get data from pir 1
+  if(topic == MODULE_TOPIC_PIR1)
+  {
+    str_pir1 = getValue(msg,';',0);
+    if (str_pir1 == "Kinni"){
+      pir1 = 1;
+    }else if(str_pir1 == "Vaba"){
+      pir1 = 0;
+    }
+  }
+  //get data from pir 2
+  if(topic == MODULE_TOPIC_PIR2)
+  {
+    str_pir2 = getValue(msg,';',0);
+    if (str_pir2 == "Kinni"){
+      pir2 = 1;
+    }else if(str_pir2 == "Vaba"){
+      pir2 = 0;
+    }
   }
 }
 
@@ -74,30 +97,38 @@ void setup()
 void loop(){
   iot.handle();
   int i;
-  if (in_data != ""){
+  if (in_data != "" && pir1 != 2 && pir2 != 2){
     i = in_data.toInt();
     if(i == 1)//ehk parklas on üks auto
     {
-      //value_out = 1;//ehk parklas on üks auto
-      matrix.clear(); // Clear the matrix field
-      matrix.drawLine(3, 4, 6, 1, LED_ON); // arv 1
-      matrix.drawLine(6, 1, 6, 8, LED_ON); //arv 1
-      matrix.writeDisplay();  // Write the changes we just made to the display
+      if (pir1 == 1 || pir2 == 1)
+      {
+        matrix.clear(); // Clear the matrix field
+        matrix.drawLine(3, 4, 6, 1, LED_ON); // arv 1
+        matrix.drawLine(6, 1, 6, 8, LED_ON); //arv 1
+        matrix.writeDisplay();  // Write the changes we just made to the display
+      }
     }
     else if (i>=2) //ehk parklas on kaks autot
     {
+      if (pir1 == 1 || pir2 == 1)
+      {
       matrix.clear(); // Clear the matrix field
       matrix.drawRect(3, 1, 4, 8, LED_ON); // arv 0
       matrix.writeDisplay();  // Write the changes we just made to the display
+      }
     }
     else if (i<=0) {
-      matrix.clear(); // Clear the matrix field
-      matrix.drawLine(2, 3, 4, 1, LED_ON); //arv 2
-      matrix.drawLine(4, 1, 5, 1, LED_ON); //arv 2
-      matrix.drawLine(5, 1, 7, 3, LED_ON); //arv 2
-      matrix.drawLine(7, 3, 2, 8, LED_ON); //arv 2
-      matrix.drawLine(2, 8, 7, 8, LED_ON); //arv 2
-      matrix.writeDisplay();  // Write the changes we just made to the display
+      if (pir1 == 1 || pir2 == 1)
+      {
+        matrix.clear(); // Clear the matrix field
+        matrix.drawLine(2, 3, 4, 1, LED_ON); //arv 2
+        matrix.drawLine(4, 1, 5, 1, LED_ON); //arv 2
+        matrix.drawLine(5, 1, 7, 3, LED_ON); //arv 2
+        matrix.drawLine(7, 3, 2, 8, LED_ON); //arv 2
+        matrix.drawLine(2, 8, 7, 8, LED_ON); //arv 2
+        matrix.writeDisplay();  // Write the changes we just made to the display
+      }
     }
   }
   delay(200);

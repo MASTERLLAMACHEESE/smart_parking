@@ -1,13 +1,3 @@
-/*
- * IoT PIR example
- *
- * This example subscribe to the "pir" topic. When a message received, then it
- * will switch the pir module "ON" and "OFF"
- *
- * Created 21 Febuary 2018 by Heiko Pikner and Mallor Kingsepp
- */
-
-// Includes global variables and librarys that the PIR shield uses
 #include <Arduino.h>
 #include <ittiot.h>
 

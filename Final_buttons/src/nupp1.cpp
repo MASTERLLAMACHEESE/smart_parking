@@ -79,7 +79,8 @@ void loop()
 
   char buf[10];
   // If the button is pushed down, it publishes message “ButtonPushed”
-  if (value_in != 0){
+  //decrease vehicle count
+  if (value_in != 0 && value_in > 0){
     if (value_out >= 1){
       value_in = value_in - 1;
       String(value_in).toCharArray(buf,10);
@@ -88,6 +89,7 @@ void loop()
       value_out = 0;
     }
   }
+  //increase vehicle count
   if (button.pushed()) {
     value_in = value_in + 1;
     iot.log("ButtonPushed");
