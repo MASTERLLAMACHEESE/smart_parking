@@ -1,5 +1,3 @@
-//https://learn.adafruit.com/adafruit-gfx-graphics-library/graphics-primitives
-
 #include <Arduino.h>
 #include <ittiot.h>
 #include <Switch.h>
@@ -8,10 +6,10 @@
 #include <SPI.h>
 
 #define MODULE_TOPIC_IN "ESP35/btn_in"
-#define MODULE_TOPIC_PIR1 "ESP31/pir" //pir1 
-#define MODULE_TOPIC_PIR2 "ESP08/pir" //pir2
-#define WIFI_NAME "Siidisaba7"
-#define WIFI_PASSWORD "Varst1onsuv1!"
+#define MODULE_TOPIC_PIR1 "ESP31/pir1" //pir1
+#define MODULE_TOPIC_PIR2 "ESP08/pir2" //pir2
+#define WIFI_NAME "Kohalik-WIFI"
+#define WIFI_PASSWORD "PlayStation4"
 
 MLED matrix(7); //set intensity=7 (maximum)
 
@@ -55,6 +53,7 @@ void iot_received(String topic, String msg)
   {
     str_pir1 = getValue(msg,';',0);
     if (str_pir1 == "Kinni"){
+      iot.log("pir1 kinni");
       pir1 = 1;
     }else if(str_pir1 == "Vaba"){
       pir1 = 0;
@@ -65,6 +64,7 @@ void iot_received(String topic, String msg)
   {
     str_pir2 = getValue(msg,';',0);
     if (str_pir2 == "Kinni"){
+      iot.log("pir2 kinni");
       pir2 = 1;
     }else if(str_pir2 == "Vaba"){
       pir2 = 0;
@@ -77,6 +77,8 @@ void iot_connected()
 {
   Serial.println("MQTT connected callback");
   iot.subscribe(MODULE_TOPIC_IN);
+  iot.subscribe(MODULE_TOPIC_PIR1);
+  iot.subscribe(MODULE_TOPIC_PIR2);
   iot.log("IoT MATRIX!");
 }
 
@@ -104,32 +106,32 @@ void loop(){
       if (pir1 == 1 || pir2 == 1)
       {
         matrix.clear(); // Clear the matrix field
-        matrix.drawLine(3, 4, 6, 1, LED_ON); // arv 1
-        matrix.drawLine(6, 1, 6, 8, LED_ON); //arv 1
+        matrix.drawLine(2, 3, 5, 0, LED_ON); // arv 1
+        matrix.drawLine(5, 0, 5, 7, LED_ON); //arv 1
         matrix.writeDisplay();  // Write the changes we just made to the display
       }
     }
     else if (i>=2) //ehk parklas on kaks autot
     {
-      if (pir1 == 1 || pir2 == 1)
+      if (pir1 == 1 && pir2 == 1)
       {
       matrix.clear(); // Clear the matrix field
-      matrix.drawRect(3, 1, 4, 8, LED_ON); // arv 0
+      matrix.drawRect(2, 0, 4, 8, LED_ON); // arv 0
       matrix.writeDisplay();  // Write the changes we just made to the display
       }
     }
     else if (i<=0) {
-      if (pir1 == 1 || pir2 == 1)
+      if (pir1 == 0 && pir2 == 0)
       {
         matrix.clear(); // Clear the matrix field
-        matrix.drawLine(2, 3, 4, 1, LED_ON); //arv 2
-        matrix.drawLine(4, 1, 5, 1, LED_ON); //arv 2
-        matrix.drawLine(5, 1, 7, 3, LED_ON); //arv 2
-        matrix.drawLine(7, 3, 2, 8, LED_ON); //arv 2
-        matrix.drawLine(2, 8, 7, 8, LED_ON); //arv 2
+        matrix.drawLine(1, 2, 3, 0, LED_ON); //arv 2
+        matrix.drawLine(3, 0, 4, 0, LED_ON); //arv 2
+        matrix.drawLine(4, 0, 6, 2, LED_ON); //arv 2
+        matrix.drawLine(6, 2, 1, 7, LED_ON); //arv 2
+        matrix.drawLine(1, 7, 6, 7, LED_ON); //arv 2
         matrix.writeDisplay();  // Write the changes we just made to the display
       }
     }
   }
-  delay(200);
+  delay(50);
 }
