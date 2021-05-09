@@ -2,8 +2,8 @@
 #include <ittiot.h>
 
 #define MODULE_TOPIC_PIR1 "pir"
-#define WIFI_NAME "Siidisaba7"
-#define WIFI_PASSWORD "Varst1onsuv1!"
+#define WIFI_NAME "***"
+#define WIFI_PASSWORD "***"
 
 //Pin definition for the PIR (GPIO14)
 #define PIR_PIN D5
