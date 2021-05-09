@@ -3,8 +3,8 @@
 #include <Switch.h>
 
 #define MODULE_TOPIC_OUT "btn_out"
-#define WIFI_NAME "Siidisaba7"
-#define WIFI_PASSWORD "Varst1onsuv1!"
+#define WIFI_NAME "***"
+#define WIFI_PASSWORD "***"
 
 const byte buttonPin = D3; // TO which pin the button has been assigned
 int i;
