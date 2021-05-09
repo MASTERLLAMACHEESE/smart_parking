@@ -4,8 +4,8 @@
 
 #define MODULE_TOPIC_IN "btn_in"
 #define MODULE_TOPIC_OUT "ESP07/btn_out"
-#define WIFI_NAME "Siidisaba7"
-#define WIFI_PASSWORD "Varst1onsuv1!"
+#define WIFI_NAME "***"
+#define WIFI_PASSWORD "***"
 
 const byte buttonPin = D3; // TO which pin the button has been assigned
 int i;
@@ -98,5 +98,5 @@ void loop()
   }else if (button.released()){
     iot.log("ButtonReleased");
   }
-    delay (200);
+    delay (100);
 }
